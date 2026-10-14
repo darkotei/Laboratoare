@@ -1,0 +1,14 @@
+.descriere{
+    background-color: yellow;
+    color:blue;
+    padding: 10px;
+}
+
+.meniu a:hover{
+    color:blue;
+}
+
+.activ{
+    font-weight: bold;
+    text-decoration: none;
+}
