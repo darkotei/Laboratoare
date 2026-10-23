@@ -1,17 +1,40 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <title>Trifan Darko – laboratoare</title>
+    <meta charset="UTF-8">
+    <title>Pagina principală</title>
+    <style>
+        .butoane-lab {
+            list-style-type: none;
+            padding: 0;
+        }
+        .butoane-lab li {
+            margin-bottom: 12px; /* Spațiu pe verticală */
+        }
+        .butoane-lab a {
+            display: inline-block;
+            width: 300px; /* Toate au aceeași lățime */
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            background-color: teal;
+            padding: 12px;
+            border-radius: 5px;
+        }
+        .butoane-lab a:hover {
+            background-color: darkcyan; /* Schimbă culoarea cursorului */
+        }
+    </style>
 </head>
 <body>
-  <h1>Trifan Darko</h1>
-  <p>Programarea aplicațiilor web – subgrupa 1342A</p>
-
-  <h2>Laboratoare</h2>
-  <ul>
-    <li><a href="L1/">Laboratorul 1 – HTML</a></li>
-    <li><a href="lab2/">Laboratorul 2 – HTML</a></li>
-  </ul>
+    <h1>Laboratoarele mele</h1>
+    <p>Programarea aplicatiilor web-Seria MIAI</p>
+    
+    <ul class="butoane-lab">
+        <li><a href="L1/">Laboratorul 1</a></li>
+        <li><a href="lab2/">Laboratorul 2</a></li>
+        <li><a href="lab3/">Laboratorul 3 - Publicare site și CSS</a></li>
+        <li><a href="lab4/">Laboratorul 4 - HTML și CSS</a></li>
+    </ul>
 </body>
 </html>
