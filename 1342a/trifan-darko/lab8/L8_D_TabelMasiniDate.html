@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tabel masini (Doar Date)</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 15px;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      #mesaj {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Masinile dorite</h1>
+
+    <form onsubmit="return adaugaMasina();">
+      <input id="marca" placeholder="Marca" />
+      <input id="model" placeholder="Model" />
+      <input id="culoare" placeholder="Culoare" />
+      <input id="anFab" type="text" placeholder="An fabricatie" />
+      <button type="submit">Adauga masina</button>
+      <button type="button" onclick="stergeToate()">Sterge toate</button>
+    </form>
+
+    <p id="mesaj"></p>
+
+    <table id="tm">
+      <tr>
+        <th>Marca</th>
+        <th>Model</th>
+        <th>Culoare</th>
+        <th>An fabricatie</th>
+      </tr>
+    </table>
+
+    <script>
+      // Folosim o cheie nouă (sau o poți păstra pe cea veche dacă o golești înainte)
+      const CHEIE_STORAGE = "carsDataArray";
+      const masini2Store = [];
+
+      // Constructorul păstrează STRICT datele mașinii
+      function masina(mk, md, cl, an) {
+        this.marca = mk;
+        this.model = md;
+        this.culoare = cl;
+        this.anFab = an;
+      }
+
+      // Metoda definită pe prototype: există o singură dată și este ignorată automat de JSON.stringify
+      masina.prototype.randNou = function () {
+        return (
+          "<tr><td>" +
+          this.marca +
+          "</td><td>" +
+          this.model +
+          "</td><td>" +
+          this.culoare +
+          "</td><td>" +
+          this.anFab +
+          "</td></tr>"
+        );
+      };
+
+      // Încărcarea datelor salvate la deschiderea paginii
+      if (localStorage.getItem(CHEIE_STORAGE)) {
+        var masiniStored = JSON.parse(localStorage.getItem(CHEIE_STORAGE));
+        for (var i = 0; i < masiniStored.length; i++) {
+          // Reconstruim obiectul cu "new masina" ca să aibă din nou metoda randNou()
+          var mReconstruita = new masina(
+            masiniStored[i].marca,
+            masiniStored[i].model,
+            masiniStored[i].culoare,
+            masiniStored[i].anFab,
+          );
+          document.getElementById("tm").innerHTML += mReconstruita.randNou();
+          masini2Store.push(mReconstruita);
+        }
+      }
+
+      function valideaza(marca, model, culoare, an) {
+        if (marca.trim() === "") {
+          return "Eroare: Marca nu poate fi goală sau formată doar din spații.";
+        }
+        if (model.trim() === "") {
+          return "Eroare: Modelul nu poate fi gol sau format doar din spații.";
+        }
+        if (culoare.trim() === "") {
+          return "Eroare: Culoarea nu poate fi goală sau formată doar din spații.";
+        }
+
+        var anCurent = new Date().getFullYear();
+        var anNumar = Number(an);
+
+        if (
+          an.trim() === "" ||
+          !Number.isInteger(anNumar) ||
+          anNumar < 1900 ||
+          anNumar > anCurent
+        ) {
+          return (
+            "Eroare: Anul trebuie să fie un număr întreg între 1900 și " +
+            anCurent +
+            "."
+          );
+        }
+
+        return "";
+      }
+
+      function adaugaMasina() {
+        var marca = document.getElementById("marca").value;
+        var model = document.getElementById("model").value;
+        var culoare = document.getElementById("culoare").value;
+        var an = document.getElementById("anFab").value;
+        var pMesaj = document.getElementById("mesaj");
+
+        var eroare = valideaza(marca, model, culoare, an);
+        if (eroare !== "") {
+          pMesaj.innerHTML = eroare;
+          return false;
+        }
+
+        pMesaj.innerHTML = "";
+
+        var mNoua = new masina(
+          marca.trim(),
+          model.trim(),
+          culoare.trim(),
+          Number(an),
+        );
+        document.getElementById("tm").innerHTML += mNoua.randNou();
+
+        // Salvăm direct obiectul; JSON.stringify păstrează doar marca, model, culoare și anFab
+        masini2Store.push(mNoua);
+        localStorage.setItem(CHEIE_STORAGE, JSON.stringify(masini2Store));
+
+        document.getElementById("marca").value = "";
+        document.getElementById("model").value = "";
+        document.getElementById("culoare").value = "";
+        document.getElementById("anFab").value = "";
+
+        return false;
+      }
+
+      // Funcția pentru butonul "Sterge toate"
+      function stergeToate() {
+        masini2Store.length = 0; // Golește vectorul din memorie
+        localStorage.removeItem(CHEIE_STORAGE); // Șterge cheia din Local Storage
+        document.getElementById("mesaj").innerHTML = "";
+
+        // Resetează tabelul păstrând doar rândul de antet
+        document.getElementById("tm").innerHTML =
+          "<tr><th>Marca</th><th>Model</th><th>Culoare</th><th>An fabricatie</th></tr>";
+      }
+    </script>
+
+    <br />
+    <a href="index.html">Inapoi la Laboratorul 8</a>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tabel masini (JSON)</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      #mesaj {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Masinile dorite</h1>
+
+    <form onsubmit="return adaugaMasina();">
+      <input id="marca" placeholder="Marca" />
+      <input id="model" placeholder="Model" />
+      <input id="culoare" placeholder="Culoare" />
+      <input id="anFab" type="text" placeholder="An fabricatie" />
+      <button type="submit">Adauga masina</button>
+    </form>
+
+    <p id="mesaj"></p>
+
+    <table id="tm">
+      <tr>
+        <th>Marca</th>
+        <th>Model</th>
+        <th>Culoare</th>
+        <th>An fabricatie</th>
+      </tr>
+    </table>
+
+    <script>
+      var m1 = new masina("Opel", "Zafira", "gri", 2015);
+      var m2 = new masina("Seat", "Ibiza", "roz", 2018);
+
+      document.getElementById("tm").innerHTML += m1.randNou();
+      document.getElementById("tm").innerHTML += m2.randNou();
+
+      if (localStorage.masinaN) {
+        var masinaJSON = localStorage.masinaN;
+        var mNoua = JSON.parse(masinaJSON);
+
+        document.getElementById("tm").innerHTML += mNoua.randNou;
+      }
+
+      function masina(mk, md, cl, an) {
+        this.marca = mk;
+        this.model = md;
+        this.culoare = cl;
+        this.anFab = an;
+        this.randNou = function () {
+          return (
+            "<tr><td>" +
+            this.marca +
+            "</td><td>" +
+            this.model +
+            "</td><td>" +
+            this.culoare +
+            "</td><td>" +
+            this.anFab +
+            "</td></tr>"
+          );
+        };
+      }
+
+      function valideaza(marca, model, culoare, an) {
+        if (marca.trim() === "") {
+          return "Eroare: Marca nu poate fi goală sau formată doar din spații.";
+        }
+        if (model.trim() === "") {
+          return "Eroare: Modelul nu poate fi gol sau format doar din spații.";
+        }
+        if (culoare.trim() === "") {
+          return "Eroare: Culoarea nu poate fi goală sau formată doar din spații.";
+        }
+
+        var anCurent = new Date().getFullYear();
+        var anNumar = Number(an);
+
+        if (
+          an.trim() === "" ||
+          !Number.isInteger(anNumar) ||
+          anNumar < 1900 ||
+          anNumar > anCurent
+        ) {
+          return (
+            "Eroare: Anul trebuie să fie un număr întreg între 1900 și " +
+            anCurent +
+            "."
+          );
+        }
+
+        return "";
+      }
+
+      function adaugaMasina() {
+        var marca = document.getElementById("marca").value;
+        var model = document.getElementById("model").value;
+        var culoare = document.getElementById("culoare").value;
+        var an = document.getElementById("anFab").value;
+        var pMesaj = document.getElementById("mesaj");
+
+        var eroare = valideaza(marca, model, culoare, an);
+
+        if (eroare !== "") {
+          pMesaj.innerHTML = eroare;
+          return false;
+        }
+
+        pMesaj.innerHTML = "";
+
+        var mNoua = new masina(
+          marca.trim(),
+          model.trim(),
+          culoare.trim(),
+          Number(an),
+        );
+
+        document.getElementById("tm").innerHTML += mNoua.randNou();
+
+        // Transformăm rezultatul metodei în șir de caractere înainte de serializarea JSON
+        mNoua.randNou = mNoua.randNou().toString();
+        var myJSON = JSON.stringify(mNoua);
+
+        localStorage.setItem("masinaN", myJSON);
+
+        return false;
+      }
+
+      /*
+      Răspunsuri Exercițiul 4:
+      (a) Cheia "masinaN" conține un șir JSON cu datele obiectului (marca, model, culoare, anFab și textul HTML randNou).
+      (b) JSON.stringify() ignoră funcțiile/metodele; salvăm rezultatul metodei ca text pentru a nu se pierde și a nu afișa "undefined" la reîncărcare.
+      (c) După JSON.parse(), "randNou" este o simplă proprietate de tip string, nu o metodă, deci nu se folosesc paranteze.
+      (d) Apare o singură mașină adăugată (ultima), la fel ca în L8_A, deoarece se suprascrie mereu aceeași cheie "masinaN".
+      */
+    </script>
+
+    <br />
+    <a href="index.html">Inapoi la Laboratorul 8</a>
+  </body>
+</html>
