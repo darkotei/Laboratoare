@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exercițiul A</title>
+  </head>
+  <body>
+    <!-- Paragraful cu id-ul "par" trebuie să fie deasupra scriptului -->
+    <p id="par">Text initial</p>
+
+    <!-- Scriptul care afișează fereastra de tip prompt -->
+    <script>
+      var text = prompt(
+        "Introduceți noul text al paragrafului:",
+        "Text initial",
+      );
+      if (text !== null && text !== "") {
+        document.getElementById("par").innerHTML = text;
+      }
+    </script>
+    <a href="index.html">Înapoi la Laboratorul 6</a>
+  </body>
+</html>

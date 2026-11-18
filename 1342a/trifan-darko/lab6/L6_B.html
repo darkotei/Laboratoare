@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exercițiul 3 - Schimbare texte</title>
+    <style>
+      /* Formatare diferită pentru cele două paragrafe */
+      #p1 {
+        color: blue;
+        font-weight: bold;
+        background-color: #e0f7fa;
+        padding: 10px;
+      }
+      #p2 {
+        color: red;
+        font-style: italic;
+        background-color: #fce4ec;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Butonul care va schimba textele între ele -->
+    <button onclick="schimbaTextele()">Schimbă textele</button>
+
+    <!-- Paragrafele care apelează funcția de modificare la clic -->
+    <p id="p1" onclick="modificaText(this)">
+      Acesta este primul paragraf, formatat cu albastru.
+    </p>
+    <p id="p2" onclick="modificaText(this)">
+      Acesta este al doilea paragraf, formatat cu roșu.
+    </p>
+
+    <script>
+      // Funcția care se execută la clicul pe oricare paragraf
+      function modificaText(element) {
+        // Un prompt cere un text nou; oferim textul curent ca valoare implicită
+        var textNou = prompt("Introduceți noul text:", element.innerHTML);
+
+        // Înlocuiește textul doar dacă s-a apăsat OK (textNou nu e null) și nu e gol
+        if (textNou !== null && textNou !== "") {
+          element.innerHTML = textNou;
+        }
+      }
+
+      // Funcția care se execută la clicul pe buton
+      function schimbaTextele() {
+        var paragraf1 = document.getElementById("p1");
+        var paragraf2 = document.getElementById("p2");
+
+        // Folosim o variabilă temporară pentru a schimba conținuturile între ele
+        var temporar = paragraf1.innerHTML;
+        paragraf1.innerHTML = paragraf2.innerHTML;
+        paragraf2.innerHTML = temporar;
+      }
+    </script>
+    <a href="index.html">Înapoi la Laboratorul 6</a>
+  </body>
+</html>

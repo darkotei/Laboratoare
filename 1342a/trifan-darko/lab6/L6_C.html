@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exercițiul 4 - Modificare culori</title>
+  </head>
+  <body>
+    <!-- Titlu de câteva cuvinte cu eveniment onclick -->
+    <h1 id="titlu" onclick="schimbaCuloareTitlu()">Titlul meu</h1>
+
+    <!-- Paragraf cu trei linii de text cu eveniment onclick -->
+    <p id="paragraf" onclick="schimbaFundalParagraf()">
+      Aceasta este prima linie de text.<br />
+      Aceasta este a doua linie de text.<br />
+      Aceasta este a treia linie de text.
+    </p>
+
+    <script>
+      // Funcția pentru modificarea culorii textului din titlu
+      function schimbaCuloareTitlu() {
+        var culoare = prompt(
+          "Introduceți o culoare pentru titlu (ex: red, #ff0000):",
+        );
+
+        // Verificăm dacă utilizatorul a introdus ceva (nu a dat Cancel sau nu a lăsat gol)
+        if (culoare !== null && culoare !== "") {
+          // Verificăm dacă valoarea introdusă este o culoare validă în CSS
+          if (CSS.supports("color", culoare)) {
+            document.getElementById("titlu").style.color = culoare;
+          } else {
+            alert("Culoare incorectă!");
+          }
+        }
+      }
+
+      // Funcția pentru modificarea fundalului paragrafului
+      function schimbaFundalParagraf() {
+        var culoare = prompt(
+          "Introduceți o culoare pentru fundalul paragrafului:",
+        );
+
+        // Verificăm dacă utilizatorul a introdus ceva
+        if (culoare !== null && culoare !== "") {
+          // Verificăm validitatea culorii
+          if (CSS.supports("color", culoare)) {
+            document.getElementById("paragraf").style.backgroundColor = culoare;
+          } else {
+            alert("Culoare incorectă!");
+          }
+        }
+      }
+    </script>
+    <a href="index.html">Înapoi la Laboratorul 6</a>
+  </body>
+</html>
