@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p id="intro">
+      Salutare, <br />
+      oameni buni! <br />
+      (Text de modificat cu js!)
+    </p>
+
+    <p>
+      Folositi metoda <b>getElementById</b> pentru a modifica textele
+      paragrafelor alaturate !
+    </p>
+
+    <p id="demo">Acest text va fi modificat prin JavaScript</p>
+
+    <script>
+      var text1 = prompt("Introduceti intro", "Salutate, oameni buni!");
+      var text2 = prompt(
+        "Introduceti outro",
+        "Acest text va fi modificat prin JavaScript"
+      );
+      if (text1 !== null && text1 !== "") {
+        document.getElementById("intro").innerHTML = text1;
+      }
+
+      if (text2 !== null && text2 !== "") {
+        document.getElementById("demo").innerHTML = text2;
+      }
+    </script>
+  </body>
+</html>

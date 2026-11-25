@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Bec </title>
+
+
+<script>
+    function toggleLight(){
+        var img = document.getElementById('imag');
+        if(img.src.match("Bec_stins.gif")){
+            img.src = "Bec_aprins.gif" 
+        }
+        else{
+            img.src = "Bec_stins.gif"
+        }
+    }
+
+
+
+    function turnOnLight(){
+        var img = document.getElementById('imag');
+        img.src = "Bec_aprins.gif" 
+        var h = document.getElementById("h");
+        h.innerHTML = "Bec aprins";
+    }
+
+
+
+    function turnOffLight(){
+        var img = document.getElementById('imag');
+        img.src = "Bec_stins.gif" 
+        var h = document.getElementById("h");
+        h.innerHTML = "Bec stins";
+    }
+
+
+
+
+
+</script>
+
+
+
+
+
+
+</head>
+<body>
+
+<h1 id = "h">Bec stins</h1>
+
+
+
+<p>
+
+
+<img id = "imag" src="Bec_stins.gif" width="100" height="180" onmouseover=turnOnLight() onmouseout=turnOffLight()>
+
+</p>
+
+
+
+
+</body>
+</html>

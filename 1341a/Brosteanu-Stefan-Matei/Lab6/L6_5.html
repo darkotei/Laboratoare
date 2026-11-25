@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Modificare folosind clase si evenimente</title>
+  </head>
+  <body>
+    <h1>
+      Utilizati Javascript si HTML DOM pentru a inlocui imaginile de mai jos asa
+      cum este indicat in textele de deasupra lor
+    </h1>
+    <label id="0" onclick="animals(0)">La click vor aparea Pisici</label>
+    <hr />
+    <img
+      class="animal"
+      src="pesti.jpg"
+      alt="Niste pesti"
+      width="160"
+      height="120"
+    />
+    <br />
+    <br />
+    <label id="4" onmouseover="peisaje(4)">La mouseover vor aparea Munti</label>
+    <hr />
+    <img
+      class="peisaj"
+      src="desert.jpg"
+      alt="O jungla"
+      width="160"
+      height="120"
+    />
+    <br />
+    <br />
+    <label id="1" onclick="animals(1)">La click vor aparea Caini</label>
+    <hr />
+    <img
+      class="animal"
+      src="egrete.jpg"
+      alt="Niste egrete"
+      width="160"
+      height="120"
+    />
+    <br />
+    <br />
+    <label id="5" onmouseout="peisaje(5)">la mouseout va aparea o Mare</label>
+    <hr />
+    <img
+      class="peisaj"
+      src="jungla.jpg"
+      alt="Un desert"
+      width="160"
+      height="120"
+    />
+
+    <script>
+      function animals(id) {
+        var animals = document.getElementsByClassName("animal");
+        var str = document.getElementById(id).innerText.split(" ");
+        animals[id].src = `./Img/${str[4]}.jpg`;
+      }
+
+      function peisaje(id) {
+        var peisaje = document.getElementsByClassName("peisaj");
+        var str = document.getElementById(id).innerText.split(" ");
+        peisaje[id-4].src = `./Img/${str[id]}.jpg`;
+      }
+    </script>
+  </body>
+</html>

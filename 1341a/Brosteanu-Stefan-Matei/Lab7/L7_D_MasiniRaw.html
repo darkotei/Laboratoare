@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Masini - abordare "bruta"</title>
+    <script>
+      // "masina" JS
+      function loadMjs() {
+        document.getElementById("mjs").innerHTML =
+          "<ul>" +
+          "<li>Tip:  Dacia</li>" +
+          "<li>Model:  Logan</li>" +
+          "<li>Culoare:  verde</li>" +
+          "</ul>";
+      }
+      // "masina" LS
+      function loadMls() {
+        if (localStorage.tip && localStorage.tip !== "null") {
+          var tL = localStorage.tip;
+          var mL = localStorage.model;
+          var cL = localStorage.culoare;
+          document.getElementById("mls").innerHTML =
+            "<ul>" +
+            "<li>Tip: " +
+            tL +
+            "</li>" +
+            "<li>Model: " +
+            mL +
+            "</li>" +
+            "<li>Culoare: " +
+            cL +
+            "</li>" +
+            "</ul>";
+        } else {
+          document.getElementById("mls").innerHTML =
+            "<p>Nicio masina salvata</p>";
+        }
+      }
+      // "masina" SS
+      function loadMss() {
+        if (sessionStorage.tip && sessionStorage.tip !== "null") {
+          var tS = sessionStorage.tip;
+          var mS = sessionStorage.model;
+          var cS = sessionStorage.culoare;
+          document.getElementById("mss").innerHTML =
+            "<ul>" +
+            "<li>Tip: " +
+            tS +
+            "</li>" +
+            "<li>Model: " +
+            mS +
+            "</li>" +
+            "<li>Culoare: " +
+            cS +
+            "</li>" +
+            "</ul>";
+        } else {
+          document.getElementById("mss").innerHTML =
+            "<p>Nicio masina salvata</p>";
+        }
+      }
+      function saveMls(event, formElement) {
+        event.preventDefault();
+        localStorage.tip = formElement.tip.value;
+        localStorage.model = formElement.model.value;
+        localStorage.culoare = formElement.culoare.value;
+        loadMls();
+      }
+
+      function resetMls(event, formElement) {
+        event.preventDefault();
+        localStorage.removeItem("tip");
+        localStorage.removeItem("model");
+        localStorage.removeItem("culoare");
+        loadMls();
+      }
+      function saveMSs(event, formElement) {
+        event.preventDefault();
+        sessionStorage.tip = formElement.tip.value;
+        sessionStorage.model = formElement.model.value;
+        sessionStorage.culoare = formElement.culoare.value;
+        loadMss();
+      }
+
+      function resetMSs(event, formElement) {
+        event.preventDefault();
+        sessionStorage.removeItem("tip");
+        sessionStorage.removeItem("model");
+        sessionStorage.removeItem("culoare");
+        loadMss();
+      }
+
+      window.onload = function () {
+        //        loadMjs();
+        loadMls();
+        loadMss();
+      };
+    </script>
+  </head>
+  <body>
+    <div
+      style="background-color: LimeGreen; color: white; font-size: 200%"
+      onload="loadMjs()"
+    >
+      <p>Masina JavaScript</p>
+      <div id="mjs"></div>
+    </div>
+
+    <div style="background-color: ForestGreen; color: white; font-size: 200%">
+      <p>Masina Local Storage</p>
+      <form
+        id="formLS"
+        onsubmit="saveMls(event, this)"
+        onreset="resetMls(event,this)"
+      >
+        <label for="tipML">Tip: </label
+        ><input type="text" name="tip" id="tipML" required />
+        <label for="modelML">Model: </label
+        ><input type="text" name="model" id="modelML" required />
+        <label for="culoareML">Culoare: </label
+        ><input type="text" name="culoare" id="culoareML" required />
+        <button type="submit">Salveaza</button>
+        <button type="reset">Sterge</button>
+      </form>
+      <div id="mls"></div>
+    </div>
+
+    <div
+      style="background-color: SeaGreen; color: white; font-size: 200%"
+      onclick="loadMss()"
+    >
+      <p>Masina Session Storage</p>
+      <form
+        id="formSS"
+        onsubmit="saveMSs(event, this)"
+        onreset="resetMSs(event,this)"
+      >
+        <label for="tipMS">Tip: </label
+        ><input type="text" name="tip" id="tipMS" required />
+        <label for="modelMS">Model: </label
+        ><input type="text" name="model" id="modelMS" required />
+        <label for="culoareMS">Culoare: </label
+        ><input type="text" name="culoare" id="culoareMS" required />
+        <button type="submit">Salveaza</button>
+        <button type="reset">Sterge</button>
+      </form>
+      <div id="mss"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      function deleteCar(event, formElement, storage, id) {
+        event.preventDefault();
+        storage.removeItem("masina");
+        loadCars();
+      }
+      function loadMSs() {
+        if (localStorage.masina) {
+          afiseaza(localStorage, "mls");
+        } else {
+          document.getElementById("mls").innerHTML =
+            "<p>Nicio masina salvata</p>";
+        }
+      }
+
+      function saveCar() {
+        if (localStorage.masini) {
+          var masini = JSON();
+        }
+      }
+
+      function saveCar(event, formElement, storage, idMasina) {
+        event.preventDefault();
+        tip = formElement.tip.value;
+        model = formElement.model.value;
+        culoare = formElement.culoare.value;
+        anFab = formElement.an.value;
+        var masina = { tip, model, culoare, anFab };
+        storage.setItem("masina", JSON.stringify(masina));
+        loadCars;
+      }
+      window.onload = function () {
+        loadMls();
+        loadMSs();
+      };
+    </script>
+  </head>
+  <body>
+    <div
+      style="background-color: ForestGreen; color: white; font-size: 200%"
+      onclick="loadMls()"
+    >
+      <p>Masina Local Storage</p>
+      <form
+        id="formLS"
+        onsubmit="saveCar(event, this,localStorage)"
+        onreset="resetCar(event,this, localStorage)"
+      >
+        <label for="tipML">Tip: </label
+        ><input type="text" name="tip" id="tipML" required />
+        <label for="modelML">Model: </label
+        ><input type="text" name="model" id="modelML" required />
+        <label for="culoareML">Culoare: </label
+        ><input type="text" name="culoare" id="culoareML" required />
+        <label for="anML" name="anMLS">An fabricatie: </label
+        ><input type="text" name="an" id="anMLS" required />
+        <button type="submit">Salveaza</button>
+        <button type="reset">Sterge</button>
+      </form>
+      <div id="mls"></div>
+    </div>
+  </body>
+</html>

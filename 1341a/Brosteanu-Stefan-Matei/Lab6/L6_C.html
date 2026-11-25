@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Lab6 - C</title>
+    <script>
+      function changeColor(id) {
+        var color = prompt("Color?");
+        if (color !== "" && color !== null && CSS.supports("color",color)) {
+          document.getElementById(id).style.color = color;
+        } else {
+          window.alert("Culoare nerecunoscuta");
+        }
+      }
+
+      function changeBackgroundColor(id) {
+        var color = prompt("Color?");
+        if (color !== "" && color !== null && CSS.supports("color",color)) {
+          document.getElementById(id).style.backgroundColor = color;
+        } else {
+          window.alert("Culoare nerecunoscuta");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1 id="tit" onclick="changeColor('tit')">Pagina L6_C</h1>
+    <p id="par" onclick="changeBackgroundColor(`par`)">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, ex,
+      voluptas excepturi saepe iure perferendis est ipsum quae repellendus,
+      nostrum cumque beatae placeat? Neque, deleniti nulla assumenda
+      voluptatibus consectetur hic.
+    </p>
+  </body>
+</html>

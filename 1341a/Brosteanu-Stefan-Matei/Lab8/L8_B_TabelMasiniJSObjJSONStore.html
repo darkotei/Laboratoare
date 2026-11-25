@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tabel masini</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Masinile dorite</h1>
+
+    <form onsubmit="return adaugaMasina()">
+      <input id="marca" placeholder="Marca" required type="text" />
+      <input id="model" placeholder="Model" required type="text" />
+      <input id="culoare" placeholder="Culoare" required type="text" />
+      <input
+        id="anFab"
+        type="number"
+        placeholder="An fabricatie"
+        required
+        type="number"
+      />
+      <button type="submit">Adauga masina</button>
+    </form>
+    <p id="mesaj"></p>
+    <table id="tm">
+      <tr>
+        <th>Marca</th>
+        <th>Model</th>
+        <th>Culoare</th>
+        <th>An fabricatie</th>
+      </tr>
+    </table>
+    <script>
+      var m1 = new masina("Opel", "Zafira", "gri", "2012");
+      var m2 = new masina("Seat", "Ibiza", "roz", "2010");
+
+      document.getElementById("tm").innerHTML += m1.randNou();
+
+      document.getElementById("tm").innerHTML += m2.randNou();
+      if (localStorage.masinaN) {
+        var masinaJSON = localStorage.masinaN;
+        var mNoua = JSON.parse(masinaJSON);
+
+        document.getElementById("tm").innerHTML += mNoua.randNou; // proprietate
+      }
+
+      function masina(mk, md, cl, an) {
+        this.marca = mk;
+        this.model = md;
+        this.culoare = cl;
+        this.an = an;
+        this.randNou = function () {
+          return (
+            "<tr><td>" +
+            this.marca +
+            "</td><td>" +
+            this.model +
+            "</td><td>" +
+            this.culoare +
+            "</td><td>" +
+            this.an +
+            "</td></tr>"
+          );
+        };
+      }
+      function adaugaMasina() {
+        var marca = document.getElementById("marca").value; // în loc de prompt("Marca:")
+        var model = document.getElementById("model").value;
+        var culoare = document.getElementById("culoare").value;
+        var an = document.getElementById("anFab").value;
+        let eroare = valideaza(marca, model, culoare, an);
+        if (eroare !== "") {
+          document.getElementById("mesaj").innerText = eroare;
+          return false;
+        } else {
+          document.getElementById("mesaj").innerText = "";
+        }
+        var mNoua = new masina(marca, model, culoare, an);
+
+        document.getElementById("tm").innerHTML += mNoua.randNou();
+
+        mNoua.randNou = mNoua.randNou();
+        var myJSON = JSON.stringify(mNoua);
+
+        localStorage.setItem("masinaN", myJSON);
+        return false;
+      }
+      function valideaza(marca, model, culoare, an) {
+        const anCurent = new Date().getFullYear();
+
+        if (!marca.trim() || !isNaN(marca)) {
+          return "Marca nu poate fi goala sau numar!";
+        }
+
+        if (!model.trim() || !isNaN(model)) {
+          return "Modelul nu poate fi gol sau numar!";
+        }
+
+        if (!culoare.trim() || !isNaN(culoare)) {
+          return "Culoarea nu poate fi goala sau numar!";
+        }
+
+        if (
+          an.trim() === "" ||
+          !Number.isInteger(Number(an)) ||
+          Number(an) < 1900 ||
+          Number(an) > anCurent
+        ) {
+          return `Anul trebuie sa fie intre 1900 si ${anCurent}!`;
+        }
+
+        return "";
+      }
+    </script>
+  </body>
+  <!--
+  a) contine cheile marca, model, culoare
+  b) mnoua reprezinta un obiect de clasa masina, mNoua are o proprietate de tip string care primeste ce returneaza functia randNou() a clasei masina. nu mai e nevoie de toString() 
+  c)nu mai e functie
+  d)doua
+--></html>
